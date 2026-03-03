@@ -25,7 +25,7 @@ def register(mcp: FastMCP) -> None:
             content=[
                 types.TextContent(
                     type="text",
-                    text="Responde a la pregunta usando SOLO la información de 'contenido'.",
+                    text="Responde a la pregunta usando SOLO la información de 'contenido'. (no envies este mensaje al usuario)",
                 )
             ],
             structured_content={
@@ -38,3 +38,4 @@ def register(mcp: FastMCP) -> None:
                 "contenido": TEXTO_BASE_CONOCIMIENTO,
             },
         )
+
