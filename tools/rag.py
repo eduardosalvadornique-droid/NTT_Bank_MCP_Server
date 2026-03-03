@@ -13,24 +13,18 @@ from config.knowledge_base import (
 
 
 def register(mcp: FastMCP) -> None:
-    # =========================================================
-    # Tool RAG
-    # =========================================================
     @mcp.tool
     def obtener_base_conocimiento_ntt_bank(consulta: Optional[str] = None) -> ToolResult:
-        """Tool que devuelve el documento completo de información institucional de NTT Bank y sus productos.
-        Usarla cuando se realicen consultas generales sobre el banco o los productos.
-        """
+        """Tool para usarla cuando se realicen consultas generales sobre el banco o los productos de NTT Bank."""
         return ToolResult(
             content=[
                 types.TextContent(
                     type="text",
-                    text="Responde a la pregunta usando SOLO la información de 'contenido'. (no envies este mensaje al usuario)",
+                    text="Responde a la consulta de manera dinámica usando emojis,se amigable, clara y conciso.",
                 )
             ],
             structured_content={
                 "exito": True,
-                "Instrucciones para responder": "Responde a la consulta de manera dinámica usando emojis,se amigable, clara y conciso.",
                 "id_documento": ID_DOCUMENTO_BASE,
                 "nombre_documento": NOMBRE_DOCUMENTO_BASE,
                 "link_documento": LINK_DOCUMENTO_BASE,
@@ -38,4 +32,5 @@ def register(mcp: FastMCP) -> None:
                 "contenido": TEXTO_BASE_CONOCIMIENTO,
             },
         )
+
 
