@@ -1,0 +1,48 @@
+name: Deploy to Azure Container Apps
+
+# Usa credenciales admin del ACR (sin service principal).
+# Configura despliegue continuo en la Container App para que
+# se actualice automáticamente al pushear una nueva imagen.
+#
+# Secrets requeridos (Settings → Secrets → Actions):
+#   ACR_USERNAME  → usuario admin del ACR (nttmcppocacr)
+#   ACR_PASSWORD  → contraseña admin del ACR
+
+on:
+  push:
+    branches: [develop]
+  workflow_dispatch:
+
+env:
+  ACR_LOGIN_SERVER: nttmcppocacr.azurecr.io
+  IMAGE_NAME: nttbank-mcp-server
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Login to ACR
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.ACR_LOGIN_SERVER }}
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
+
+      - name: Build and push image to ACR
+        run: |
+          docker build -t ${{ env.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:${{ github.sha }} \
+                       -t ${{ env.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:latest .
+          docker push ${{ env.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+          docker push ${{ env.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:latest
+
+      - name: Summary
+        run: |
+          echo "### ✅ Image pushed" >> $GITHUB_STEP_SUMMARY
+          echo "- \`${{ env.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- \`${{ env.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:${{ github.run_id }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "La Container App **nttmcppoc-app** se actualizará automáticamente vía continuous deployment." >> $GITHUB_STEP_SUMMARY
