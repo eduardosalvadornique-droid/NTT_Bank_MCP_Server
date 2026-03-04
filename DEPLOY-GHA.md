@@ -41,7 +41,7 @@ az account set --subscription "<SUBSCRIPTION_ID>"
 ### 4. Actualizar la Container App con la nueva imagen (referencia el tag)
 
 ```bash
-az containerapp update --name nttmcppoc-app --resource-group DefaultResourceGroup-EUS --image nttmcppocacr.azurecr.io/nttbank-mcp-server:382304e69f08bfd0f959413215464090f5da10aa
+az containerapp update --name nttmcppoc-app --resource-group DefaultResourceGroup-EUS --image nttmcppocacr.azurecr.io/nttbank-mcp-server:9516fa3b3e838a2ae7127b47b91bf4ed0de445aa
 ```
 
 ---

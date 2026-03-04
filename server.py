@@ -1,3 +1,5 @@
+import os
+
 from fastmcp import FastMCP
 
 from tools import rag, range_earnings, benefits, identification, cards
@@ -32,4 +34,7 @@ cards_resources.register(mcp)
 # Run
 # =========================================================
 if __name__ == "__main__":
-    mcp.run()
+    transport = os.getenv("MCP_TRANSPORT", "streamable-http")
+    host = os.getenv("HOST", "0.0.0.0")
+    port = int(os.getenv("PORT", "80"))
+    mcp.run(transport=transport, host=host, port=port)
