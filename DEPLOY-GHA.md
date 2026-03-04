@@ -41,8 +41,16 @@ az account set --subscription "<SUBSCRIPTION_ID>"
 ### 4. Actualizar la Container App con la nueva imagen (referencia el tag)
 
 ```bash
-az containerapp update --name nttmcppoc-app --resource-group DefaultResourceGroup-EUS --image nttmcppocacr.azurecr.io/nttbank-mcp-server:9516fa3b3e838a2ae7127b47b91bf4ed0de445aa
+az containerapp update --name nttmcppoc-app --resource-group DefaultResourceGroup-EUS --image nttmcppocacr.azurecr.io/nttbank-mcp-server:b502ee38f055c7bda07818f2c7fbdd9e1eaf2ab3
 ```
+
+### 5. Verifica el mcp server con el inspector de MCP
+
+```bash
+npx @modelcontextprotocol/inspector
+```
+
+**Nota:** Usa https://nttmcppoc-app.salmonrock-f475cfb8.eastus.azurecontainerapps.io/mcp y el protocolo http-streamable.
 
 ---
 
